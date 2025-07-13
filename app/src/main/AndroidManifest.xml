@@ -10,7 +10,7 @@
         android:theme="@style/Theme.CryptoFrontend">
 
         <!-- 👇 Set Signup as the launcher activity -->
-        <activity android:name=".register.Signup"
+        <activity android:name=".Signup"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
         </activity>
 
         <!-- ❌ Login should NOT have intent-filter -->
-        <activity android:name=".register.Login" />
+        <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
 
     </application>

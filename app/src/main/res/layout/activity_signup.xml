@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/rsp0w1pddvel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/cr50bffffff"
+        android:elevation="80dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="150dp"
+                android:layout_marginBottom="53dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Immediately feel the \nease of transacting just by registering"
+                    android:textColor="#2F1155"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_width="275dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- Username Field -->
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/cr15bf2f2f2"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="41dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:shapeAppearanceOverlay="@style/cr15"
+                    android:scaleType="fitXY" />
+
+                <EditText
+                    android:id="@+id/rnzmyrya1j6k"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:background="@null"
+                    android:textColor="#828282"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="2dp" />
+            </LinearLayout>
+
+            <!-- Email Field -->
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/cr15bf2f2f2"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginStart="40dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:shapeAppearanceOverlay="@style/cr15"
+                    android:scaleType="fitXY" />
+
+                <EditText
+                    android:id="@+id/roixfpfnopu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:background="@null"
+                    android:textColor="#828282"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="2dp" />
+            </LinearLayout>
+
+            <!-- ✅ Password Field -->
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:background="@drawable/cr15bf2f2f2"
+                android:paddingVertical="15dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginBottom="75dp"
+                android:layout_marginStart="40dp"
+                android:orientation="horizontal">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="20dp"
+                    android:src="@mipmap/ic_launcher"
+                    app:shapeAppearanceOverlay="@style/cr15"
+                    android:scaleType="fitXY" />
+
+                <EditText
+                    android:id="@+id/editTextPasswordSignup"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:background="@null"
+                    android:textColor="#828282"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:paddingVertical="2dp" />
+            </LinearLayout>
+
+            <!-- Register Button -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/cr15b5b259f"
+                android:paddingVertical="20dp"
+                android:paddingHorizontal="60dp"
+                android:layout_marginBottom="94dp"
+                android:layout_marginStart="99dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rlj1ne5fg24"
+                    android:text="Register"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <!-- Login Text -->
+            <TextView
+                android:id="@+id/r6kdcs2d66u7"
+                android:text="You have account? Login"
+                android:textColor="#BDBDBD"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="75dp"
+                android:layout_marginStart="118dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
