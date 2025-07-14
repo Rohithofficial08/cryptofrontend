@@ -20,6 +20,32 @@ class Login : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // ✅ Check if user is already logged in
+        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+        val token = sharedPref.getString("TOKEN", null)
+        val userId = sharedPref.getString("USER_ID", null)
+        val wallet = sharedPref.getString("WALLET", null)
+
+        if (token != null && userId != null && wallet != null) {
+            val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+            with(sharedPref.edit()) {
+                putString("TOKEN", token)
+                putString("USER_ID", userId)
+                putString("WALLET", wallet)
+                apply()
+            }
+
+            val intent = Intent(this@Login, Home::class.java)
+            intent.putExtra("TOKEN", token)
+            intent.putExtra("USER_ID", userId)
+            intent.putExtra("WALLET", wallet)
+            startActivity(intent)
+
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_login)
 
         // ✅ Allow cleartext network policy for development
@@ -66,7 +92,7 @@ class Login : AppCompatActivity() {
         )
 
         val request = Request.Builder()
-            .url("http://192.168.137.1:5000/api/auth/login")
+            .url("http://192.168.0.2:5000/api/auth/login")
             .post(body)
             .build()
 
@@ -86,6 +112,15 @@ class Login : AppCompatActivity() {
                         val token = jsonResponse.getString("token")
                         val userId = jsonResponse.getString("userId")
                         val walletAddress = jsonResponse.getString("walletAddress")
+
+                        // ✅ Save login session
+                        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+                        with(sharedPref.edit()) {
+                            putString("TOKEN", token)
+                            putString("USER_ID", userId)
+                            putString("WALLET", walletAddress)
+                            apply()
+                        }
 
                         Toast.makeText(this@Login, "Login Successful", Toast.LENGTH_SHORT).show()
 

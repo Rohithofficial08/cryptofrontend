@@ -2,65 +2,90 @@ package com.example.cryptofrontend
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.view.View
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import okhttp3.*
+import org.json.JSONObject
+import java.io.IOException
 
 class Signup : AppCompatActivity() {
 
-    private var username: String = ""
-    private var email: String = ""
-    private var password: String = ""
+    private var walletAddress: String? = null
+    private val client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        val usernameInput = findViewById<EditText>(R.id.rnzmyrya1j6k)
-        val emailInput = findViewById<EditText>(R.id.roixfpfnopu)
-        val passwordInput = findViewById<EditText>(R.id.editTextPasswordSignup)
+        // Get references to all required UI elements
+        val connectButton = findViewById<LinearLayout>(R.id.connectWalletButtonLayout)
+        val registerButton = findViewById<LinearLayout>(R.id.rrrregis)
+        val loginText = findViewById<TextView>(R.id.r6kdcs2d66u7)
 
-        usernameInput.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                username = s.toString()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        val usernameField = findViewById<EditText>(R.id.rnzmyrya1j6k)
+        val emailField = findViewById<EditText>(R.id.roixfpfnopu)
+        val passwordField = findViewById<EditText>(R.id.editTextPasswordSignup)
 
-        emailInput.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                email = s.toString()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
+        // Connect wallet button logic
+        connectButton.setOnClickListener {
+            walletAddress = "0x1234567890abcdef1234567890abcdef12345678"
+            val url = "http://192.168.1.5:3000/getBalance/$walletAddress"
 
-        passwordInput.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                password = s.toString()
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-        })
+            val request = Request.Builder().url(url).build()
 
-        // Register button click
-        val registerButton = findViewById<View>(R.id.rlj1ne5fg24)
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    runOnUiThread {
+                        Toast.makeText(this@Signup, "Failed to connect to wallet API", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.use {
+                        if (!response.isSuccessful) {
+                            runOnUiThread {
+                                Toast.makeText(this@Signup, "API Error", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            val jsonData = response.body!!.string()
+                            val jsonObject = JSONObject(jsonData)
+                            val balance = jsonObject.getString("balance")
+
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@Signup,
+                                    "Wallet: $walletAddress\nBalance: $balance",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            })
+        }
+
+        // Register button logic
         registerButton.setOnClickListener {
-            if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
-                Toast.makeText(this, "Registered: $username", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this, Login::class.java))
+            val username = usernameField.text.toString()
+            val email = emailField.text.toString()
+            val password = passwordField.text.toString()
+
+            if (username.isBlank() || email.isBlank() || password.isBlank()) {
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Please enter all fields", Toast.LENGTH_SHORT).show()
+                // TODO: Replace with real registration logic
+                Toast.makeText(
+                    this,
+                    "Register clicked\nUsername: $username\nEmail: $email\nPassword: $password",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
-        // Login text click
-        val loginText = findViewById<TextView>(R.id.r6kdcs2d66u7)
+        // Redirect to Login activity
         loginText.setOnClickListener {
             startActivity(Intent(this, Login::class.java))
         }

@@ -1,27 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/homeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center"
-    android:background="#F5F5F5">
+    android:background="#F5F5F5"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/textWelcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="101dp"
+        android:layout_height="42dp"
+        android:paddingBottom="16dp"
         android:text="Welcome!"
+        android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:paddingBottom="16dp" />
+        tools:layout_editor_absoluteX="126dp"
+        tools:layout_editor_absoluteY="198dp" />
 
     <TextView
         android:id="@+id/textToken"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="320dp"
+        android:padding="10dp"
         android:text="JWT Token will show here"
+        android:textColor="#000000"
         android:textSize="14sp"
-        android:padding="10dp" />
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="667dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

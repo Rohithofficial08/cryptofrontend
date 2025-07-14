@@ -47,6 +47,7 @@ dependencies {
     // Compose + Material
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

@@ -55,9 +55,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="20dp"
-                    android:src="@mipmap/ic_launcher"
-                    app:shapeAppearanceOverlay="@style/cr15"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_android_24"
+                    app:shapeAppearanceOverlay="@style/cr15" />
 
                 <EditText
                     android:id="@+id/rnzmyrya1j6k"
@@ -89,9 +89,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="20dp"
-                    android:src="@mipmap/ic_launcher"
-                    app:shapeAppearanceOverlay="@style/cr15"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_alternate_email_24"
+                    app:shapeAppearanceOverlay="@style/cr15" />
 
                 <EditText
                     android:id="@+id/roixfpfnopu"
@@ -107,7 +107,7 @@
                     android:paddingVertical="2dp" />
             </LinearLayout>
 
-            <!-- ✅ Password Field -->
+            <!-- Password Field -->
             <LinearLayout
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
@@ -115,7 +115,7 @@
                 android:background="@drawable/cr15bf2f2f2"
                 android:paddingVertical="15dp"
                 android:paddingHorizontal="20dp"
-                android:layout_marginBottom="75dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginStart="40dp"
                 android:orientation="horizontal">
 
@@ -123,9 +123,9 @@
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="20dp"
-                    android:src="@mipmap/ic_launcher"
-                    app:shapeAppearanceOverlay="@style/cr15"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/baseline_admin_panel_settings_24"
+                    app:shapeAppearanceOverlay="@style/cr15" />
 
                 <EditText
                     android:id="@+id/editTextPasswordSignup"
@@ -141,30 +141,52 @@
                     android:paddingVertical="2dp" />
             </LinearLayout>
 
-            <!-- Register Button -->
+            <!-- ✅ Connect Wallet Button -->
             <LinearLayout
+                android:id="@+id/connectWalletButtonLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cr15b5b259f"
                 android:paddingVertical="20dp"
-                android:paddingHorizontal="60dp"
-                android:layout_marginBottom="94dp"
+                android:paddingHorizontal="40dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginStart="99dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/rlj1ne5fg24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Connect Wallet"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ✅ Register Button -->
+            <LinearLayout
+                android:id="@+id/rrrregis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="99dp"
+                android:layout_marginBottom="94dp"
+                android:background="@drawable/cr15b5b259f"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="vertical"
+                android:paddingHorizontal="60dp"
+                android:paddingVertical="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Register"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Login Text -->
             <TextView
                 android:id="@+id/r6kdcs2d66u7"
                 android:text="You have account? Login"
