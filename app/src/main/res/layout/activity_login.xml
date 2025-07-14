@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#FFFFFF"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/eeemail"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <ScrollView
-        android:id="@+id/r6r643aspejh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -23,125 +22,128 @@
 
             <TextView
                 android:id="@+id/rijisqr14j8"
-                android:textColor="#2F1155"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="33dp"
                 android:layout_marginTop="110dp"
                 android:layout_marginBottom="86dp"
-                android:layout_marginHorizontal="33dp"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
                 android:gravity="center"
-                android:text="Welcome back\nto Mabank Wallet \nare u redy for pay crypto" />
+                android:text="Welcome back\nto Mabank Wallet \nare u redy for pay crypto"
+                android:textColor="#2F1155"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
+            <!-- ✅ Email Input -->
             <LinearLayout
                 android:id="@+id/r7oq401z2nd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:background="@drawable/cr15bf2f2f2"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="20dp"
-                android:layout_marginBottom="41dp"
                 android:layout_marginHorizontal="32dp"
-                android:orientation="horizontal">
+                android:layout_marginBottom="41dp"
+                android:background="@drawable/cr15bf2f2f2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/rwjyecesuohc"
-                    app:shapeAppearanceOverlay="@style/cr15"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="20dp"
+                    android:scaleType="fitXY"
                     android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY" />
+                    app:shapeAppearanceOverlay="@style/cr15" />
 
                 <EditText
-                    android:inputType="text"
-                    android:hint="Username"
-                    android:background="@null"
-                    android:id="@+id/r4518u5l8ffv"
-                    android:textColor="#828282"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
+                    android:id="@+id/editTextEmail"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:paddingVertical="2dp" />
+                    android:background="@null"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:paddingVertical="2dp"
+                    android:textColor="#828282"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
+            <!-- ✅ Password Input -->
             <LinearLayout
                 android:id="@+id/r6licprgjz7g"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:background="@drawable/cr15bf2f2f2"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="20dp"
-                android:layout_marginBottom="55dp"
                 android:layout_marginHorizontal="32dp"
-                android:orientation="horizontal">
+                android:layout_marginBottom="55dp"
+                android:background="@drawable/cr15bf2f2f2"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="15dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/rlex0molg35b"
-                    app:shapeAppearanceOverlay="@style/cr15"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_marginEnd="20dp"
+                    android:scaleType="fitXY"
                     android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY" />
+                    app:shapeAppearanceOverlay="@style/cr15" />
 
-                <!-- ✅ Password Input -->
                 <EditText
                     android:id="@+id/editTextPassword"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="@null"
                     android:hint="Password"
                     android:inputType="textPassword"
+                    android:paddingVertical="2dp"
                     android:textColor="#828282"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:background="@null"
-                    android:paddingVertical="2dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
+            <!-- ✅ Login Button -->
             <LinearLayout
                 android:id="@+id/rv1980nfnq1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_marginBottom="86dp"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <Button
                     android:id="@+id/r8qh6yj2f6wc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/cr15b5b259f"
+                    android:paddingHorizontal="72dp"
+                    android:paddingVertical="20dp"
                     android:text="Login"
                     android:textColor="#FFFFFF"
-                    android:textStyle="bold"
                     android:textSize="18sp"
-                    android:background="@drawable/cr15b5b259f"
-                    android:paddingVertical="20dp"
-                    android:paddingHorizontal="72dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
+            <!-- ✅ Register Prompt -->
             <LinearLayout
                 android:id="@+id/r780rkysn3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
                 android:layout_marginBottom="191dp"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/rsm7o7ulp1a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Don't have an account yet? Register"
                     android:textColor="#BDBDBD"
                     android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="Don't have an account yet? Register" />
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -1,15 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cryptofrontend">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.CryptoFrontend">
+        android:theme="@style/Theme.CryptoFrontend"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config">
 
-        <!-- 👇 Set Signup as the launcher activity -->
         <activity android:name=".Signup"
             android:exported="true">
             <intent-filter>
@@ -18,9 +21,10 @@
             </intent-filter>
         </activity>
 
-        <!-- ❌ Login should NOT have intent-filter -->
         <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".Home" />
 
     </application>
+
 </manifest>
