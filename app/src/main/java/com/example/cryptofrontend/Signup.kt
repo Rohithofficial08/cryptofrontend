@@ -32,7 +32,7 @@ class Signup : AppCompatActivity() {
         // Connect wallet button logic
         connectButton.setOnClickListener {
             walletAddress = "0x1234567890abcdef1234567890abcdef12345678"
-            val url = "http://192.168.1.5:3000/getBalance/$walletAddress"
+            val url = "http://192.168.137.1:3000/getBalance/$walletAddress"
 
             val request = Request.Builder().url(url).build()
 

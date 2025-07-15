@@ -1,6 +1,10 @@
 <resources>
     <!-- Custom shape style -->
-    <style name="cr15">
-        <!-- Add shape or corner definitions if needed -->
+    <style name="cr50" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
+
+    <style name="cr15"></style>
+
 </resources>

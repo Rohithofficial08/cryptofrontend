@@ -9,53 +9,42 @@
     android:layout_height="match_parent">
 
     <ScrollView
-        android:id="@+id/rsp0w1pddvel"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/cr50bffffff"
-        android:elevation="80dp">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="24dp">
 
+            <!-- Title Text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:text="Immediately feel the \nease of transacting just by registering"
+                android:textColor="#2F1155"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- Username -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="150dp"
-                android:layout_marginBottom="53dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:text="Immediately feel the \nease of transacting just by registering"
-                    android:textColor="#2F1155"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:layout_width="275dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center" />
-            </LinearLayout>
-
-            <!-- Username Field -->
-            <LinearLayout
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:background="@drawable/cr15bf2f2f2"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="41dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="fitXY"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/baseline_android_24"
                     app:shapeAppearanceOverlay="@style/cr15" />
 
@@ -65,31 +54,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Username"
-                    android:inputType="text"
                     android:background="@null"
+                    android:inputType="text"
                     android:textColor="#828282"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:paddingVertical="2dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Email Field -->
+            <!-- Email -->
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:background="@drawable/cr15bf2f2f2"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="40dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="fitXY"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/baseline_alternate_email_24"
                     app:shapeAppearanceOverlay="@style/cr15" />
 
@@ -99,31 +84,27 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Email"
-                    android:inputType="textEmailAddress"
                     android:background="@null"
+                    android:inputType="textEmailAddress"
                     android:textColor="#828282"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:paddingVertical="2dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- Password Field -->
+            <!-- Password -->
             <LinearLayout
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:background="@drawable/cr15bf2f2f2"
-                android:paddingVertical="15dp"
-                android:paddingHorizontal="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="40dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="24dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="24dp"
                     android:layout_height="24dp"
-                    android:layout_marginEnd="20dp"
-                    android:scaleType="fitXY"
+                    android:layout_marginEnd="16dp"
                     android:src="@drawable/baseline_admin_panel_settings_24"
                     app:shapeAppearanceOverlay="@style/cr15" />
 
@@ -133,27 +114,24 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:hint="Password"
-                    android:inputType="textPassword"
                     android:background="@null"
+                    android:inputType="textPassword"
                     android:textColor="#828282"
                     android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:paddingVertical="2dp" />
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- ✅ Connect Wallet Button -->
+            <!-- Connect Wallet -->
             <LinearLayout
                 android:id="@+id/connectWalletButtonLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/cr15b5b259f"
-                android:paddingVertical="20dp"
-                android:paddingHorizontal="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginStart="99dp"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:layout_marginBottom="16dp"
                 android:clickable="true"
-                android:focusable="true"
-                android:orientation="vertical">
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -164,19 +142,17 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- ✅ Register Button -->
+            <!-- Register -->
             <LinearLayout
                 android:id="@+id/rrrregis"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="99dp"
-                android:layout_marginBottom="94dp"
                 android:background="@drawable/cr15b5b259f"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:layout_marginBottom="24dp"
                 android:clickable="true"
-                android:focusable="true"
-                android:orientation="vertical"
-                android:paddingHorizontal="60dp"
-                android:paddingVertical="20dp">
+                android:focusable="true">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -187,16 +163,17 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+            <!-- Login Text -->
             <TextView
                 android:id="@+id/r6kdcs2d66u7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="You have account? Login"
                 android:textColor="#BDBDBD"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="75dp"
-                android:layout_marginStart="118dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_marginBottom="32dp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

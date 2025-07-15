@@ -25,6 +25,7 @@
         </activity>
 
         <!-- ✅ Your actual app screens -->
+
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity" />

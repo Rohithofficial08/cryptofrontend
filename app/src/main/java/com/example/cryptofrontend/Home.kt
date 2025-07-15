@@ -1,44 +1,44 @@
 package com.example.cryptofrontend
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 
 class Home : AppCompatActivity() {
-    @SuppressLint("MissingInflatedId")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val token = intent.getStringExtra("TOKEN")
-        val userId = intent.getStringExtra("USER_ID")
-        val wallet = intent.getStringExtra("WALLET")
+        val ethInfoImage = findViewById<ImageView>(R.id.imageView4)
+        ethInfoImage?.let {
+            Glide.with(this)
+                .load("https://storage.googleapis.com/tagjs-prod.appspot.com/v1/8uH0iELUOQ/2hkds9ix_expires_30_days.png")
+                .into(it)
+        }
 
-        val welcomeText = findViewById<TextView>(R.id.textWelcome)
-        val tokenText = findViewById<TextView>(R.id.textToken)
+        val walletBalanceText = findViewById<TextView>(R.id.walletBalanceText)
+        val walletNameText = findViewById<TextView>(R.id.walletNameText)
+        val walletAddress = intent.getStringExtra("WALLET") ?: "Unknown"
+        walletNameText.text = "Ethereum"
+        walletBalanceText.text = "$ 55.002"
 
-        val logoutButton = findViewById<Button>(R.id.buttonLogout)
+        // ✅ Logout button logic
+        val logoutButton = findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
+            // Clear session
             val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
             sharedPref.edit().clear().apply()
 
-            val intent = Intent(this, Login::class.java)
+            // Navigate to Login
+            val intent = Intent(this@Home, Login::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             finish()
         }
-
-
-        welcomeText.text = "Welcome, User ID: $userId\nWallet: $wallet"
-        tokenText.text = "Token:\n$token"
-
-        // ✅ Set text color to black
-        welcomeText.setTextColor(Color.BLACK)
-        tokenText.setTextColor(Color.BLACK)
     }
-
-
 }

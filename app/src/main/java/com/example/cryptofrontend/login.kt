@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import java.io.IOException
 
@@ -21,38 +22,30 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✅ Check if user is already logged in
+        // ✅ Auto-login if session exists
         val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
         val token = sharedPref.getString("TOKEN", null)
         val userId = sharedPref.getString("USER_ID", null)
         val wallet = sharedPref.getString("WALLET", null)
 
         if (token != null && userId != null && wallet != null) {
-            val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
-            with(sharedPref.edit()) {
-                putString("TOKEN", token)
-                putString("USER_ID", userId)
-                putString("WALLET", wallet)
-                apply()
+            val intent = Intent(this@Login, Home::class.java).apply {
+                putExtra("TOKEN", token)
+                putExtra("USER_ID", userId)
+                putExtra("WALLET", wallet)
             }
-
-            val intent = Intent(this@Login, Home::class.java)
-            intent.putExtra("TOKEN", token)
-            intent.putExtra("USER_ID", userId)
-            intent.putExtra("WALLET", wallet)
             startActivity(intent)
-
             finish()
             return
         }
 
         setContentView(R.layout.activity_login)
 
-        // ✅ Allow cleartext network policy for development
+        // ✅ Allow cleartext traffic (HTTP) on older Android versions
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        // Load images using Glide
+        // ✅ Load UI images
         val image1 = findViewById<ShapeableImageView>(R.id.rwjyecesuohc)
         val image2 = findViewById<ShapeableImageView>(R.id.rlex0molg35b)
 
@@ -86,20 +79,18 @@ class Login : AppCompatActivity() {
             put("password", password)
         }
 
-        val body = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            json.toString()
-        )
+        // ✅ Fixed deprecated usage
+        val jsonBody = json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
         val request = Request.Builder()
-            .url("http://192.168.0.2:5000/api/auth/login")
-            .post(body)
+            .url("http://192.168.137.1:5000/api/auth/login") // ✅ CORRECT IP!
+            .post(jsonBody)
             .build()
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
                 runOnUiThread {
-                    Toast.makeText(this@Login, "Network Error", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@Login, "Network Error: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -113,7 +104,6 @@ class Login : AppCompatActivity() {
                         val userId = jsonResponse.getString("userId")
                         val walletAddress = jsonResponse.getString("walletAddress")
 
-                        // ✅ Save login session
                         val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
                         with(sharedPref.edit()) {
                             putString("TOKEN", token)
@@ -124,11 +114,11 @@ class Login : AppCompatActivity() {
 
                         Toast.makeText(this@Login, "Login Successful", Toast.LENGTH_SHORT).show()
 
-                        // ✅ Redirect to Home activity
-                        val intent = Intent(this@Login, Home::class.java)
-                        intent.putExtra("TOKEN", token)
-                        intent.putExtra("USER_ID", userId)
-                        intent.putExtra("WALLET", walletAddress)
+                        val intent = Intent(this@Login, Home::class.java).apply {
+                            putExtra("TOKEN", token)
+                            putExtra("USER_ID", userId)
+                            putExtra("WALLET", walletAddress)
+                        }
                         startActivity(intent)
                         finish()
                     } else {
