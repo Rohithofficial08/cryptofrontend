@@ -1,0 +1,101 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:id="@+id/r08fwcrk9u09q"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/cr50bffffff"
+        android:elevation="50dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Back Arrow -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/rl9gtkpd8vnj"
+                android:layout_width="49dp"
+                android:layout_height="49dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="20dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/arrow_circle_left"
+                app:shapeAppearanceOverlay="@style/cr50" />
+
+            <!-- 👇 This is the FIX: Add this missing ImageView -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/r1i7189vv3u3i"
+                android:layout_width="65dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="216dp"
+                android:layout_marginBottom="29dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_launcher_foreground"
+                app:shapeAppearanceOverlay="@style/cr50" />
+
+            <LinearLayout
+                android:id="@+id/rjkxut8vvci"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="342dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/rkbboeibj37f"
+                    android:textColor="#130138"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="QR-Scanner" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/rvxbjvdvti8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="61dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/r20jecj8i7rb"
+                    android:layout_width="146dp"
+                    android:layout_height="19dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ellipse_23"
+                    app:shapeAppearanceOverlay="@style/cr50" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/r9ocfmdfdhoh"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="137dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/r14y19eitfs2"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"
+                    android:layout_width="237dp"
+                    android:gravity="center"
+                    android:text="People can pay from the above  scanner" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -15,7 +15,7 @@
         android:usesCleartextTraffic="true"
         android:networkSecurityConfig="@xml/network_security_config">
 
-        <!-- ✅ SplashActivity is now the launcher activity -->
+        <!-- ✅ Launcher screen -->
         <activity android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
 
-        <!-- ✅ Your actual app screens -->
-
+        <!-- ✅ Your app screens -->
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Home" />
+        <activity android:name=".Notification" /> <!-- ✅ ADD THIS LINE -->
     </application>
 </manifest>
