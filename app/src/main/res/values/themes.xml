@@ -1,7 +1,24 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Main App Theme -->
     <style name="Theme.CryptoFrontend" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorOnPrimary">@color/white</item>
         <item name="android:statusBarColor" tools:targetApi="l">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
+
+    <!-- Splash Theme (for Android 12+) -->
+    <style name="Theme.CryptoFrontend.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Make background transparent -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <!-- Disable Android 12+ splash APIs -->
+        <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="31">@null</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="31">@null</item>
+        <item name="android:windowSplashScreenBrandingImage" tools:targetApi="31">@null</item>
+
+        <!-- Remove this line if it causes errors -->
+        <!-- <item name="android:postSplashScreenTheme" tools:targetApi="31">@style/Theme.CryptoFrontend</item> -->
+    </style>
+
 </resources>

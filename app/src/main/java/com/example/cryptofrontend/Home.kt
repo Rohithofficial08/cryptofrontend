@@ -49,8 +49,13 @@ class Home : AppCompatActivity() {
             val intent = Intent(this@Home, Notification::class.java)
             startActivity(intent)
         }
+        // settings button
+        val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
+        settingsIcon.setOnClickListener {
+            val intent = Intent(this@Home, Settings::class.java)
+            startActivity(intent)
+        }
 
-        // Bottom Navigation logic
 
 
 
