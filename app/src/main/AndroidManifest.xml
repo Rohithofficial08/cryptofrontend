@@ -16,26 +16,22 @@
         android:networkSecurityConfig="@xml/network_security_config">
 
         <!-- ✅ Launcher screen -->
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:theme="@style/Theme.CryptoFrontend.Splash">
+        <activity android:name=".SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-
-
-        <!-- ✅ Other screens -->
+        <!-- ✅ Your app screens -->
         <activity android:name=".Signup" />
         <activity android:name=".Login" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Home" />
         <activity android:name=".Notification" />
+        <activity android:name=".ReceiveActivity" />
 
-        <!-- ✅ Settings screen (fix for crash) -->
-        <activity android:name=".Settings" />
+
     </application>
 </manifest>

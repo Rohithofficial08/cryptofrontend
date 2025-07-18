@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt") // ✅ Add this for Glide compiler
 }
 
+
 android {
     namespace = "com.example.cryptofrontend"
     compileSdk = 35
@@ -46,6 +47,7 @@ android {
 dependencies {
     // Compose + Material
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.journeyapps:zxing-android-embedded:4.3.0")
 
 
     implementation(libs.androidx.core.ktx)

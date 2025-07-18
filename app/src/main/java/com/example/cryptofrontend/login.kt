@@ -1,5 +1,7 @@
+// 📄 Login.kt
 package com.example.cryptofrontend
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
@@ -24,6 +26,7 @@ class Login : AppCompatActivity() {
 
         // ✅ Auto-login if session exists
         val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+
         val token = sharedPref.getString("TOKEN", null)
         val userId = sharedPref.getString("USER_ID", null)
         val wallet = sharedPref.getString("WALLET", null)
@@ -41,7 +44,7 @@ class Login : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        // ✅ Allow cleartext traffic (HTTP) on older Android versions
+        // ✅ Allow cleartext traffic (HTTP)
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
@@ -57,13 +60,14 @@ class Login : AppCompatActivity() {
             .load("https://storage.googleapis.com/tagjs-prod.appspot.com/v1/8uH0iELUOQ/m8524b8y_expires_30_days.png")
             .into(image2)
 
+        // ✅ Get form inputs
         val emailField = findViewById<EditText>(R.id.editTextEmail)
         val passwordField = findViewById<EditText>(R.id.editTextPassword)
         val loginButton = findViewById<Button>(R.id.r8qh6yj2f6wc)
 
         loginButton.setOnClickListener {
-            val email = emailField.text.toString()
-            val password = passwordField.text.toString()
+            val email = emailField.text.toString().trim()
+            val password = passwordField.text.toString().trim()
 
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 loginUser(email, password)
@@ -79,11 +83,11 @@ class Login : AppCompatActivity() {
             put("password", password)
         }
 
-        // ✅ Fixed deprecated usage
-        val jsonBody = json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        val jsonBody = json.toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
         val request = Request.Builder()
-            .url("http://192.168.137.40:5000/api/auth/login") // ✅ CORRECT IP!
+            .url("http://192.168.0.2:5000/api/auth/login") // ✅ Your working backend URL
             .post(jsonBody)
             .build()
 
@@ -98,33 +102,40 @@ class Login : AppCompatActivity() {
                 val responseData = response.body?.string()
 
                 runOnUiThread {
-                    if (response.isSuccessful) {
-                        val jsonResponse = JSONObject(responseData ?: "")
-                        val token = jsonResponse.getString("token")
-                        val userId = jsonResponse.getString("userId")
-                        val walletAddress = jsonResponse.getString("walletAddress")
+                    if (response.isSuccessful && responseData != null) {
+                        try {
+                            val jsonResponse = JSONObject(responseData)
 
-                        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
-                        with(sharedPref.edit()) {
-                            putString("TOKEN", token)
-                            putString("USER_ID", userId)
-                            putString("WALLET", walletAddress)
-                            apply()
+                            val token = jsonResponse.getString("token")
+                            val userId = jsonResponse.getString("userId")
+                            val walletAddress = jsonResponse.getString("walletAddress")
+
+                            // ✅ Save to SharedPreferences
+                            val sharedPref = getSharedPreferences("user_session", Context.MODE_PRIVATE)
+                            with(sharedPref.edit()) {
+                                putString("TOKEN", token)
+                                putString("USER_ID", userId)
+                                putString("WALLET", walletAddress)
+                                apply()
+                            }
+
+                            Toast.makeText(this@Login, "Login Successful", Toast.LENGTH_SHORT).show()
+
+                            // ✅ Go to Home Activity
+                            val intent = Intent(this@Login, Home::class.java).apply {
+                                putExtra("TOKEN", token)
+                                putExtra("USER_ID", userId)
+                                putExtra("WALLET", walletAddress)
+                            }
+                            startActivity(intent)
+                            finish()
+                        } catch (e: Exception) {
+                            Toast.makeText(this@Login, "Parse error: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
-
-                        Toast.makeText(this@Login, "Login Successful", Toast.LENGTH_SHORT).show()
-
-                        val intent = Intent(this@Login, Home::class.java).apply {
-                            putExtra("TOKEN", token)
-                            putExtra("USER_ID", userId)
-                            putExtra("WALLET", walletAddress)
-                        }
-                        startActivity(intent)
-                        finish()
                     } else {
-                        val errorMessage = JSONObject(responseData ?: "{}")
+                        val errorMsg = JSONObject(responseData ?: "{}")
                             .optString("error", "Login Failed")
-                        Toast.makeText(this@Login, errorMessage, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@Login, errorMsg, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
