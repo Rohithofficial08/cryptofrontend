@@ -1,18 +1,18 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    id("org.jetbrains.kotlin.kapt") // ✅ Add this for Glide compiler
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.plugin.compose)
 }
 
 android {
     namespace = "com.example.cryptofrontend"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.cryptofrontend"
         minSdk = 28
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -39,39 +39,69 @@ android {
 
     buildFeatures {
         compose = true
-        viewBinding = true // Optional: helps with XML views
+        viewBinding = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.12"
+    }
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/INDEX.LIST"
+            excludes += "/META-INF/DEPENDENCIES"
+            excludes += "/META-INF/NOTICE"
+            excludes += "/META-INF/LICENSE"
+            excludes += "/META-INF/LICENSE.txt"
+            excludes += "/META-INF/NOTICE.txt"
+        }
     }
 }
 
 dependencies {
-    // Compose + Material
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-
+    implementation(platform(libs.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
 
-    // ✅ Add Glide
-    implementation("com.github.bumptech.glide:glide:4.15.1")
-    kapt("com.github.bumptech.glide:compiler:4.15.1")
+    // ✅ HTTP client for API calls
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
 
-    // ✅ Material Design Components (for ShapeableImageView)
-    implementation("com.google.android.material:material:1.11.0")
+    // ✅ JSON parsing - use the correct dependency
+    implementation("org.json:json:20230618")
 
-    // Testing
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.glide)
+    kapt(libs.glide.compiler)
+
+    // ✅ Web3j for Ethereum blockchain interaction
+    implementation("org.web3j:core:4.9.8")
+    implementation("org.web3j:crypto:4.9.8")
+
+    // ✅ WebView for MetaMask integration
+    implementation("androidx.webkit:webkit:1.8.0")
+
+    // ✅ Coroutines for async operations
+    implementation(libs.kotlinx.coroutines.android)
+
+    // ✅ Additional dependencies for crypto operations
+    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+
+    // ✅ For better WebView JavaScript handling
+    implementation("androidx.browser:browser:1.7.0")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }

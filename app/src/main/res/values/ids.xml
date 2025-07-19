@@ -36,4 +36,7 @@
     <item name="rxwb31up7abp" type="id" />
     <item name="rjmgd145eykk" type="id" />
     <item name="bottomNavigation" type="id" />
+    <item name="editUsername" type="id" />
+    <item name="editEmail" type="id" />
+    <item name="editPassword" type="id" />
 </resources>

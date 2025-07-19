@@ -83,7 +83,7 @@ class Login : AppCompatActivity() {
         val jsonBody = json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
         val request = Request.Builder()
-            .url("http://192.168.137.40:5000/api/auth/login") // ✅ CORRECT IP!
+            .url("http://192.168.0.32:5000/api/auth/login") // ✅ CORRECT IP!
             .post(jsonBody)
             .build()
 
