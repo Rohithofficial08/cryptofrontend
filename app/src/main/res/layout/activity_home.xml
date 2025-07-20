@@ -18,17 +18,16 @@
             android:orientation="vertical">
 
             <!-- Header -->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
                 android:paddingVertical="20dp">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:id="@+id/headerTextColumn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
                     android:orientation="vertical">
 
                     <TextView
@@ -55,8 +54,46 @@
                     android:layout_height="40dp"
                     android:background="@drawable/bg_circle"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/profile_picture" />
-            </LinearLayout>
+                    android:src="@drawable/profile_picture"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    />
+
+                <!-- Wallet ID (with eye icon) -->
+                <LinearLayout
+                    android:id="@+id/idAndEyeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toStartOf="@id/imageView4"
+                    android:layout_alignBottom="@id/imageView4"
+                    android:layout_marginEnd="10dp"
+                    >
+
+                    <!-- Eye icon -->
+                    <ImageView
+                        android:id="@+id/showWalletEye"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_eye"
+                        android:contentDescription="Show Wallet Address"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="4dp" />
+
+                    <!-- Wallet ID text -->
+                    <TextView
+                        android:id="@+id/profileWalletText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="••••••••••••••"
+                        android:textColor="#8338FF"
+                        android:textSize="6sp"
+                        android:textStyle="bold"
+                        android:layout_gravity="center_vertical" />
+                </LinearLayout>
+            </RelativeLayout>
 
             <!-- Purple Card -->
             <LinearLayout
@@ -92,7 +129,7 @@
 
                         <TextView
                             android:id="@+id/walletBalanceText"
-                            android:text="$ 55.002"
+                            android:text="$ 0.00"
                             android:textColor="#FFFFFF"
                             android:textSize="22sp"
                             android:textStyle="bold"

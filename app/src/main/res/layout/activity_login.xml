@@ -28,7 +28,7 @@
                 android:layout_marginTop="110dp"
                 android:layout_marginBottom="86dp"
                 android:gravity="center"
-                android:text="Welcome back\nto Mabank Wallet \nare u redy for pay crypto"
+                android:text="Welcome to the Crypto wallet Drazo pay crypto are you ready to pay"
                 android:textColor="#2F1155"
                 android:textSize="24sp"
                 android:textStyle="bold" />
