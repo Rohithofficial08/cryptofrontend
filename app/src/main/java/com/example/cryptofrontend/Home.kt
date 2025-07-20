@@ -1,63 +1,72 @@
 package com.example.cryptofrontend
 
-import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.widget.Toast
 
 class Home : AppCompatActivity() {
 
-    @SuppressLint("MissingInflatedId")
+    private lateinit var sharedPref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        // Ethereum info image (top right)
-        val ethInfoImage = findViewById<ImageView>(R.id.imageView4)
-        ethInfoImage?.let {
-            Glide.with(this)
-                .load("https://storage.googleapis.com/tagjs-prod.appspot.com/v1/8uH0iELUOQ/2hkds9ix_expires_30_days.png")
-                .into(it)
-        }
+        // ✅ Access shared preferences
+        sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
 
-        // Wallet info
-        val walletBalanceText = findViewById<TextView>(R.id.walletBalanceText)
-        val walletNameText = findViewById<TextView>(R.id.walletNameText)
-        val walletAddress = intent.getStringExtra("WALLET") ?: "Unknown"
-        walletNameText.text = "Ethereum"
-        walletBalanceText.text = "$ 55.002"
-
-        // Logout logic
+        // ✅ Logout Button
         val logoutButton = findViewById<Button>(R.id.logoutButton)
         logoutButton.setOnClickListener {
-            val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
             sharedPref.edit().clear().apply()
-            val intent = Intent(this@Home, Login::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, Login::class.java))
             finish()
         }
 
-        // Notification button
+        // ✅ Receive Button (was causing crash before — FIXED)
+        val receiveBtn = findViewById<LinearLayout>(R.id.receiveBtn)
+        receiveBtn.setOnClickListener {
+            startActivity(Intent(this, ReceiveActivity::class.java))
+        }
+
+        // ✅ Payment Button
+        val paymentBtn = findViewById<LinearLayout>(R.id.paymentBtn)
+        paymentBtn.setOnClickListener {
+            Toast.makeText(this, "Payment screen coming soon!", Toast.LENGTH_SHORT).show()
+        }
+
+        // ✅ Bottom nav icons
+        val walletIcon = findViewById<ImageView>(R.id.walletIcon)
         val notificationIcon = findViewById<ImageView>(R.id.notificationIcon)
-        notificationIcon.setOnClickListener {
-            val intent = Intent(this@Home, Notification::class.java)
-            startActivity(intent)
-        }
-        // settings button
         val settingsIcon = findViewById<ImageView>(R.id.settingsIcon)
-        settingsIcon.setOnClickListener {
-            val intent = Intent(this@Home, Settings::class.java)
-            startActivity(intent)
+
+        walletIcon.setOnClickListener {
+            Toast.makeText(this, "Already on Wallet screen", Toast.LENGTH_SHORT).show()
         }
 
+        notificationIcon.setOnClickListener {
+            startActivity(Intent(this, Notification::class.java))
+        }
 
+        settingsIcon.setOnClickListener {
+            Toast.makeText(this, "Settings coming soon", Toast.LENGTH_SHORT).show()
+        }
 
+        // ✅ Show wallet data from SharedPreferences
+        val walletBalanceText = findViewById<TextView>(R.id.walletBalanceText)
+        val walletNameText = findViewById<TextView>(R.id.walletNameText)
 
+        val walletBalance = sharedPref.getString("walletBalance", "$0.00")
+        val walletName = sharedPref.getString("walletName", "Ethereum")
+
+        walletBalanceText.text = walletBalance
+        walletNameText.text = walletName
     }
 }
