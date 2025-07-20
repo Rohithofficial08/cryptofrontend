@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -17,12 +18,15 @@ import java.io.IOException
 
 class Login : AppCompatActivity() {
 
+    // Use the correct backend IP/port
+    private val backendUrl = "http://192.168.0.2:5000"
+
     private val client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // ✅ Auto-login if session exists
+        // Auto-login if session exists
         val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
         val token = sharedPref.getString("TOKEN", null)
         val userId = sharedPref.getString("USER_ID", null)
@@ -41,18 +45,17 @@ class Login : AppCompatActivity() {
 
         setContentView(R.layout.activity_login)
 
-        // ✅ Allow cleartext traffic (HTTP) on older Android versions
+        // Allow cleartext HTTP on older Android versions
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        // ✅ Load UI images
+        // Load UI images
         val image1 = findViewById<ShapeableImageView>(R.id.rwjyecesuohc)
         val image2 = findViewById<ShapeableImageView>(R.id.rlex0molg35b)
 
         Glide.with(this)
             .load("https://storage.googleapis.com/tagjs-prod.appspot.com/v1/8uH0iELUOQ/0j5vm0fd_expires_30_days.png")
             .into(image1)
-
         Glide.with(this)
             .load("https://storage.googleapis.com/tagjs-prod.appspot.com/v1/8uH0iELUOQ/m8524b8y_expires_30_days.png")
             .into(image2)
@@ -61,10 +64,18 @@ class Login : AppCompatActivity() {
         val passwordField = findViewById<EditText>(R.id.editTextPassword)
         val loginButton = findViewById<Button>(R.id.r8qh6yj2f6wc)
 
-        loginButton.setOnClickListener {
-            val email = emailField.text.toString()
-            val password = passwordField.text.toString()
+        // --- REGISTER TEXT --- add this block
+        val registerText = findViewById<TextView>(R.id.rsm7o7ulp1a) // Set to your Register TextView ID
 
+        registerText?.setOnClickListener {
+            // Go to the Signup activity when register text clicked
+            startActivity(Intent(this@Login, Signup::class.java))
+            finish()
+        }
+
+        loginButton.setOnClickListener {
+            val email = emailField.text.toString().trim()
+            val password = passwordField.text.toString()
             if (email.isNotEmpty() && password.isNotEmpty()) {
                 loginUser(email, password)
             } else {
@@ -78,12 +89,9 @@ class Login : AppCompatActivity() {
             put("email", email)
             put("password", password)
         }
-
-        // ✅ Fixed deprecated usage
         val jsonBody = json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-
         val request = Request.Builder()
-            .url("http://192.168.0.32:5000/api/auth/login") // ✅ CORRECT IP!
+            .url("$backendUrl/api/auth/login")
             .post(jsonBody)
             .build()
 
@@ -96,35 +104,41 @@ class Login : AppCompatActivity() {
 
             override fun onResponse(call: Call, response: Response) {
                 val responseData = response.body?.string()
-
                 runOnUiThread {
                     if (response.isSuccessful) {
-                        val jsonResponse = JSONObject(responseData ?: "")
-                        val token = jsonResponse.getString("token")
-                        val userId = jsonResponse.getString("userId")
-                        val walletAddress = jsonResponse.getString("walletAddress")
+                        try {
+                            val jsonResponse = JSONObject(responseData ?: "")
+                            val token = jsonResponse.optString("token", "")
+                            val userId = jsonResponse.optString("userId", "")
+                            val walletAddress = jsonResponse.optString("walletAddress", "")
 
-                        val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
-                        with(sharedPref.edit()) {
-                            putString("TOKEN", token)
-                            putString("USER_ID", userId)
-                            putString("WALLET", walletAddress)
-                            apply()
+                            val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
+                            with(sharedPref.edit()) {
+                                putString("TOKEN", token)
+                                putString("USER_ID", userId)
+                                putString("WALLET", walletAddress)
+                                apply()
+                            }
+
+                            Toast.makeText(this@Login, "Login Successful", Toast.LENGTH_SHORT).show()
+
+                            val intent = Intent(this@Login, Home::class.java).apply {
+                                putExtra("TOKEN", token)
+                                putExtra("USER_ID", userId)
+                                putExtra("WALLET", walletAddress)
+                            }
+                            startActivity(intent)
+                            finish()
+                        } catch (e: Exception) {
+                            Toast.makeText(this@Login, "Login failed: Invalid response", Toast.LENGTH_SHORT).show()
                         }
-
-                        Toast.makeText(this@Login, "Login Successful", Toast.LENGTH_SHORT).show()
-
-                        val intent = Intent(this@Login, Home::class.java).apply {
-                            putExtra("TOKEN", token)
-                            putExtra("USER_ID", userId)
-                            putExtra("WALLET", walletAddress)
-                        }
-                        startActivity(intent)
-                        finish()
                     } else {
-                        val errorMessage = JSONObject(responseData ?: "{}")
-                            .optString("error", "Login Failed")
-                        Toast.makeText(this@Login, errorMessage, Toast.LENGTH_SHORT).show()
+                        val error = try {
+                            JSONObject(responseData ?: "{}").optString("error", "Login Failed")
+                        } catch (e: Exception) {
+                            responseData ?: "Login Failed"
+                        }
+                        Toast.makeText(this@Login, error, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
