@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.cryptofrontend" />
+                  <option name="mobileSdkAppId" value="1:1080826607010:android:63264fc89ca0417490aefb" />
+                  <option name="projectId" value="cryptofrontend1" />
+                  <option name="projectNumber" value="1080826607010" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
