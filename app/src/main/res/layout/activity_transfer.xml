@@ -137,16 +137,16 @@
                 android:id="@+id/transferBtn"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:layout_marginHorizontal="24dp"
                 android:layout_marginTop="34dp"
                 android:layout_marginBottom="24dp"
-                android:layout_marginHorizontal="24dp"
+                android:background="@drawable/bg_coin_background"
                 android:backgroundTint="#6A0DAD"
                 android:text="Transfer"
                 android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textSize="18sp"
                 android:textColor="#FFFFFF"
-                android:background="@drawable/rectangle_1"/>
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

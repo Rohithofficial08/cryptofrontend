@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 class Signup : AppCompatActivity() {
 
-    private val backendUrl = "http://192.168.137.205:5000"
+    private val backendUrl = "http://192.168.137.1:5000"
     private var usernameEt: EditText? = null
     private var emailEt: EditText? = null
     private var passwordEt: EditText? = null

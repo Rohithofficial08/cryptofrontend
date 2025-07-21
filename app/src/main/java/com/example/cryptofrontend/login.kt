@@ -19,7 +19,7 @@ import java.io.IOException
 class Login : AppCompatActivity() {
 
     // Use the correct backend IP/port
-    private val backendUrl = "http://192.168.137.205:5000"
+    private val backendUrl = "http://192.168.137.1:5000"
 
     private val client = OkHttpClient()
 

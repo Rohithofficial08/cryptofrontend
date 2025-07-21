@@ -13,7 +13,7 @@ import java.io.IOException
 class Home : AppCompatActivity() {
 
     private lateinit var sharedPref: SharedPreferences
-    private val backendUrl = "http://192.168.137.205:5000" // ✅ Update based on your server IP
+    private val backendUrl = "http://192.168.137.1:5000" // ✅ Update based on your server IP
     private val client = OkHttpClient()
     private var isWalletShown = false
 

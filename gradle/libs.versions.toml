@@ -14,6 +14,7 @@ coroutines = "1.7.3"
 json = "20231013"
 googleGmsGoogleServices = "4.4.3"
 firebaseInappmessagingDisplay = "21.0.2"
+firebaseMessaging = "24.1.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +39,7 @@ json = { group = "org.json", name = "json", version.ref = "json" }
 walletconnect-core = { group = "com.github.WalletConnect", name = "WalletConnectKotlinV2", version.ref = "walletconnect" }
 walletconnect-sign = { group = "com.github.trustwallet", name = "wallet-core", version = "3.1.1" }
 firebase-inappmessaging-display = { group = "com.google.firebase", name = "firebase-inappmessaging-display", version.ref = "firebaseInappmessagingDisplay" }
+firebase-messaging = { group = "com.google.firebase", name = "firebase-messaging", version.ref = "firebaseMessaging" }
 
 [plugins]
 
