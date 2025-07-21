@@ -1,141 +1,58 @@
 package com.example.cryptofrontend
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.BitmapFactory
+import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import okhttp3.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody.Companion.toRequestBody
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.WriterException
+import com.google.zxing.qrcode.QRCodeWriter
 import org.json.JSONObject
-import java.io.IOException
 
 class ReceiveActivity : AppCompatActivity() {
-
-    private lateinit var qrImage: ImageView
-    private lateinit var walletText: TextView
-    private lateinit var refreshIcon: Button
-    private lateinit var backToHomeBtn: Button
-
-    private var userId: String? = null
-    private var walletAddress: String? = null
-
-    private val client = OkHttpClient()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_receive)
 
-        qrImage = findViewById(R.id.qrImageView)
-        walletText = findViewById(R.id.walletAddressTextView)
-        refreshIcon = findViewById(R.id.refreshQrBtn)
-        backToHomeBtn = findViewById(R.id.backToHomeBtn)
+        val sharedPref: SharedPreferences = getSharedPreferences("user_session", MODE_PRIVATE)
+        val userId = sharedPref.getString("USER_ID", null)
+        val walletAddress = sharedPref.getString("WALLET", null)
 
-        loadSession()
+        val addressTextView = findViewById<TextView>(R.id.receiveAddressText)
+        val userIdTextView = findViewById<TextView>(R.id.receiveUserIdText)
+        val qrImageView = findViewById<ImageView>(R.id.receiveQrImage)
 
-        if (userId == null || walletAddress == null) {
-            Toast.makeText(this, "Missing session data. Please log in again.", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, Login::class.java))
-            finish()
+        // Show both userId and wallet address
+        userIdTextView.text = "User ID: ${userId ?: "Not found"}"
+        addressTextView.text = "Wallet: ${walletAddress ?: "Not found"}"
+
+        // Generate QR code encapsulating BOTH userId and walletAddress
+        if (userId.isNullOrBlank() || walletAddress.isNullOrBlank()) {
+            Toast.makeText(this, "User ID or Wallet address not found", Toast.LENGTH_SHORT).show()
             return
         }
 
-        walletText.text = "Wallet: ${walletAddress?.let { it.take(6) + "..." + it.takeLast(4) }}"
+        try {
+            val qrObj = JSONObject()
+            qrObj.put("userId", userId)
+            qrObj.put("walletAddress", walletAddress)
+            val qrContent = qrObj.toString()
 
-        fetchQRCode()
-
-        refreshIcon.setOnClickListener {
-            fetchQRCode()
-        }
-
-        backToHomeBtn.setOnClickListener {
-            startActivity(Intent(this, Home::class.java))
-            finish()
-        }
-    }
-
-    private fun loadSession() {
-        val sharedPref = getSharedPreferences("user_session", Context.MODE_PRIVATE)
-        userId = sharedPref.getString("USER_ID", null)
-        walletAddress = sharedPref.getString("WALLET", null)
-    }
-
-    private fun fetchQRCode() {
-        if (userId.isNullOrEmpty() || walletAddress.isNullOrEmpty()) {
-            Toast.makeText(this, "Session expired. Please login again.", Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, Login::class.java))
-            finish()
-            return
-        }
-
-        val json = JSONObject().apply {
-            put("userId", userId)
-            put("walletAddress", walletAddress)
-        }
-
-        val body = json.toString().toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
-
-        val request = Request.Builder()
-            .url("http://192.168.0.2:5000/api/transactions/generate-qr") // Update IP if needed
-            .post(body)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                runOnUiThread {
-                    Toast.makeText(this@ReceiveActivity, "Network error: ${e.message}", Toast.LENGTH_SHORT).show()
-                    Log.e("QR_REQUEST_ERROR", e.message ?: "Unknown error")
+            val qrCodeWriter = QRCodeWriter()
+            val bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, 512, 512)
+            val bmp = Bitmap.createBitmap(512, 512, Bitmap.Config.RGB_565)
+            for (x in 0 until 512) {
+                for (y in 0 until 512) {
+                    bmp.setPixel(x, y, if (bitMatrix[x, y]) android.graphics.Color.BLACK else android.graphics.Color.WHITE)
                 }
             }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseData = response.body?.string()
-
-                runOnUiThread {
-                    Log.d("QR_RESPONSE", "Raw response: $responseData")
-
-                    if (response.isSuccessful && responseData != null) {
-                        try {
-                            val jsonResponse = JSONObject(responseData)
-                            val qrBase64 = jsonResponse.getString("qrImage")
-
-                            val base64Data = qrBase64.substringAfter("base64,", "")
-                            val imageBytes = Base64.decode(base64Data, Base64.DEFAULT)
-                            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-
-                            if (bitmap != null) {
-                                qrImage.setImageBitmap(bitmap)
-                            } else {
-                                Toast.makeText(this@ReceiveActivity, "Failed to decode QR image", Toast.LENGTH_SHORT).show()
-                                Log.e("QR_PARSE_ERROR", "BitmapFactory returned null")
-                            }
-
-                            val payload = jsonResponse.optJSONObject("qrPayload")
-                            if (payload != null) {
-                                val scannedUserId = payload.optString("userId")
-                                val scannedWallet = payload.optString("walletAddress")
-                                Log.d("QR_PAYLOAD", "userId: $scannedUserId | wallet: $scannedWallet")
-                            }
-
-                        } catch (e: Exception) {
-                            Toast.makeText(this@ReceiveActivity, "Failed to parse QR", Toast.LENGTH_SHORT).show()
-                            Log.e("QR_PARSE_ERROR", "Exception: ${e.message}")
-                        }
-                    } else {
-                        Toast.makeText(this@ReceiveActivity, "Failed to load QR", Toast.LENGTH_SHORT).show()
-                        Log.e("QR_ERROR", "Response failed: ${response.code} | $responseData")
-                    }
-                }
-            }
-
-        })
+            qrImageView.setImageBitmap(bmp)
+        } catch (e: WriterException) {
+            Toast.makeText(this, "Error generating QR", Toast.LENGTH_SHORT).show()
+        }
     }
 }
-

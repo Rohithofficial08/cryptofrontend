@@ -13,7 +13,7 @@ import java.io.IOException
 class Home : AppCompatActivity() {
 
     private lateinit var sharedPref: SharedPreferences
-    private val backendUrl = "http://192.168.137.205:5000"
+    private val backendUrl = "http://192.168.137.205:5000" // ✅ Update based on your server IP
     private val client = OkHttpClient()
     private var isWalletShown = false
 
@@ -21,9 +21,11 @@ class Home : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // Get shared preferences
         sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
         val walletAddress = sharedPref.getString("WALLET", null)
 
+        // UI references
         val walletBalanceText = findViewById<TextView>(R.id.walletBalanceText)
         val walletNameText = findViewById<TextView>(R.id.walletNameText)
         val profileWalletText = findViewById<TextView>(R.id.profileWalletText)
@@ -34,23 +36,25 @@ class Home : AppCompatActivity() {
 
         showWalletEye.setOnClickListener {
             isWalletShown = !isWalletShown
-            if (isWalletShown) {
-                profileWalletText.text = walletAddress ?: "ID: Unknown"
-                showWalletEye.setImageResource(R.drawable.ic_eye_off)
+            profileWalletText.text = if (isWalletShown) {
+                walletAddress ?: "ID: Unknown"
             } else {
-                profileWalletText.text = "••••••••••••••"
-                showWalletEye.setImageResource(R.drawable.ic_eye)
+                "••••••••••••••"
             }
+            showWalletEye.setImageResource(if (isWalletShown) R.drawable.ic_eye_off else R.drawable.ic_eye)
         }
 
+        // Get balance if wallet address exists
         if (!walletAddress.isNullOrBlank()) {
             getLiveBalance(walletAddress, walletBalanceText)
         } else {
-            walletBalanceText.text = "$0.00"
+            walletBalanceText.text = "0 APT"
         }
 
-        walletNameText.text = "Ethereum"
+        // Set token/coin title
+        walletNameText.text = "BlockDAG" // Can be "APT" or token name
 
+        // Logout action
         findViewById<Button>(R.id.logoutButton)?.setOnClickListener {
             sharedPref.edit().clear().apply()
             Toast.makeText(this, "Logged out", Toast.LENGTH_SHORT).show()
@@ -58,12 +62,12 @@ class Home : AppCompatActivity() {
             finish()
         }
 
+        // Navigation buttons
         findViewById<LinearLayout>(R.id.receiveBtn)?.setOnClickListener {
             startActivity(Intent(this, ReceiveActivity::class.java))
         }
 
         findViewById<LinearLayout>(R.id.paymentBtn)?.setOnClickListener {
-            // ✅ Navigate to Payment screen
             startActivity(Intent(this, Payment::class.java))
         }
 
@@ -79,9 +83,11 @@ class Home : AppCompatActivity() {
             startActivity(Intent(this, Settings::class.java))
         }
 
+        // Load avatar or profile image
         findViewById<ImageView>(R.id.imageView4)?.let {
             Glide.with(this)
                 .load("https://storage.googleapis.com/tagjs-prod.appspot.com/v1/8uH0iELUOQ/2hkds9ix_expires_30_days.png")
+                .placeholder(R.drawable.ic_launcher_foreground)
                 .into(it)
         }
     }
@@ -92,7 +98,10 @@ class Home : AppCompatActivity() {
 
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-                runOnUiThread { balanceView.text = "Error" }
+                runOnUiThread {
+                    balanceView.text = "Error"
+                    Toast.makeText(this@Home, "Failed to fetch balance", Toast.LENGTH_SHORT).show()
+                }
             }
 
             override fun onResponse(call: Call, response: Response) {
@@ -102,7 +111,7 @@ class Home : AppCompatActivity() {
                         try {
                             val obj = JSONObject(data)
                             val balance = obj.optString("balance", "0")
-                            balanceView.text = "$balance"
+                            balanceView.text = "$balance APT"
                         } catch (e: Exception) {
                             balanceView.text = "Error"
                         }

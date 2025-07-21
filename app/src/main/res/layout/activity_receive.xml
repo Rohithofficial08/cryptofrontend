@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/receiveLayout"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:padding="24dp">
 
     <TextView
-        android:id="@+id/userIdTextView"
+        android:id="@+id/receiveTitle"
+        android:text="Receive Crypto"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="User ID: "
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/walletAddressTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wallet: "
-        android:textSize="16sp" />
+        android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/qrImageView"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="20dp"
-        android:contentDescription="QR Code" />
+        android:id="@+id/receiveQrImage"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="Your wallet QR"/>
 
-    <Button
-        android:id="@+id/refreshQrBtn"
+    <!-- Show User ID -->
+    <TextView
+        android:id="@+id/receiveUserIdText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="🔄 Refresh QR"
-        android:layout_marginTop="20dp" />
+        android:text="User ID: ----"
+        android:textSize="16sp"
+        android:padding="4dp"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="6dp"/>
 
-    <Button
-        android:id="@+id/backToHomeBtn"
+    <!-- Show Wallet address -->
+    <TextView
+        android:id="@+id/receiveAddressText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="🏠 Back to Home"
-        android:layout_marginTop="10dp" />
+        android:text="Wallet: ----"
+        android:textSize="16sp"
+        android:padding="4dp"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/tipText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show this QR or address to the sender"
+        android:textSize="14sp"
+        android:layout_marginTop="16dp"/>
+
 </LinearLayout>

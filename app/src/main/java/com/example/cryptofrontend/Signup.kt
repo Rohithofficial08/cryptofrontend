@@ -24,7 +24,6 @@ class Signup : AppCompatActivity() {
     private var loginText: TextView? = null
     private var walletAddress: String = ""
 
-    // Extended timeout OkHttpClient for registration/airdrop
     private val client = OkHttpClient.Builder()
         .connectTimeout(45, TimeUnit.SECONDS)
         .writeTimeout(45, TimeUnit.SECONDS)
@@ -89,16 +88,20 @@ class Signup : AppCompatActivity() {
 
         return when {
             username.isEmpty() -> {
-                usernameEt?.error = "Username is required"; false
+                usernameEt?.error = "Username is required"
+                false
             }
             email.isEmpty() -> {
-                emailEt?.error = "Email is required"; false
+                emailEt?.error = "Email is required"
+                false
             }
             password.isEmpty() -> {
-                passwordEt?.error = "Password is required"; false
+                passwordEt?.error = "Password is required"
+                false
             }
             walletAddress.isBlank() -> {
-                Toast.makeText(this, "Connect your wallet first", Toast.LENGTH_SHORT).show(); false
+                Toast.makeText(this, "Connect your wallet first", Toast.LENGTH_SHORT).show()
+                false
             }
             else -> true
         }
@@ -110,16 +113,13 @@ class Signup : AppCompatActivity() {
         password: String,
         walletAddress: String?
     ) {
-        // Get FCM Token first
         FirebaseMessaging.getInstance().token.addOnCompleteListener { tokenTask ->
             if (!tokenTask.isSuccessful) {
                 Toast.makeText(this, "Unable to retrieve FCM token", Toast.LENGTH_SHORT).show()
                 return@addOnCompleteListener
             }
-
             val fcmToken = tokenTask.result ?: "unknown-token"
 
-            // Build JSON request
             val json = JSONObject().apply {
                 put("username", username)
                 put("email", email)
@@ -144,7 +144,6 @@ class Signup : AppCompatActivity() {
                         ).show()
                     }
                 }
-
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string()
                     runOnUiThread {
@@ -154,7 +153,6 @@ class Signup : AppCompatActivity() {
                                 val token = jsonResponse.optString("token", "")
                                 val userId = jsonResponse.optString("userId", "")
                                 val walletAddr = jsonResponse.optString("walletAddress", walletAddress ?: "")
-
                                 val sharedPref = getSharedPreferences("user_session", MODE_PRIVATE)
                                 with(sharedPref.edit()) {
                                     putString("TOKEN", token)
@@ -162,27 +160,25 @@ class Signup : AppCompatActivity() {
                                     putString("WALLET", walletAddr)
                                     apply()
                                 }
-
-                                Toast.makeText(this@Signup, "Registration successful!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this@Signup, "Registration successful! 50 APT airdropped 🎉", Toast.LENGTH_LONG).show()
                                 startActivity(Intent(this@Signup, Home::class.java))
                                 finish()
                             } catch (e: Exception) {
                                 Toast.makeText(this@Signup, "Registration failed: ${e.message}", Toast.LENGTH_LONG).show()
                             }
                         } else {
-                            if (body?.contains("User already exists") == true) {
-                                AlertDialog.Builder(this@Signup)
-                                    .setTitle("Account Exists")
-                                    .setMessage("User already exists. Want to log in instead?")
-                                    .setPositiveButton("Login") { _, _ ->
-                                        startActivity(Intent(this@Signup, Login::class.java))
-                                        finish()
-                                    }
-                                    .setNegativeButton("Cancel", null)
-                                    .show()
-                            } else {
-                                Toast.makeText(this@Signup, "Error: $body", Toast.LENGTH_LONG).show()
-                            }
+                            val errorMsg =
+                                when {
+                                    body?.contains("User already exists") == true -> "User already exists. Want to log in instead?"
+                                    body?.contains("Wallet already registered") == true -> "Wallet already registered. Use a new address."
+                                    body?.contains("Invalid wallet address") == true -> "Invalid wallet address format."
+                                    else -> "Error: $body"
+                                }
+                            AlertDialog.Builder(this@Signup)
+                                .setTitle("Signup Issue")
+                                .setMessage(errorMsg)
+                                .setPositiveButton("OK", null)
+                                .show()
                         }
                     }
                 }
